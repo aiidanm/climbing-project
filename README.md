@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Aims
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project aims to create a collabrative climbing centre webapp allowing users to add climbs themselves along with info
 
 ## Available Scripts
 
