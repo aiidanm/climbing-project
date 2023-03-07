@@ -12,3 +12,9 @@
   width: 1000px;
   height: 1000px
 }
+
+.click_buttons {
+  background-color: brown;
+  height: 100px;
+  width: 100px;
+}

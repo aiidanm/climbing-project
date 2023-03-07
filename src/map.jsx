@@ -1,27 +1,42 @@
 import './App.css';
 import { useState } from 'react';
 import { createElement } from 'react';
+import styled from "styled-components"
 
+const marker = styled.div`
+
+
+`
 const Map = () => {
-
+    const [elementCoords, setElementCoords] =useState([])
+    const [testCoords, setTestCoords] = useState([])
   
     const handleClick = (event) => {
         
         
-        var item = document.createElement("span");
-        item.className = "item";
-        var xPosition = event.clientX - (item.clientWidth);
-        var yPosition = event.clientY - (item.clientHeight);
-        item.style.left = xPosition + "px";
-        item.style.top = yPosition + "px";
-        item.style.border = "2px solid black"
-        return <h1 style={{left: `${item.style.left}`, top: `${item.style.top}`, border: "2px solid black"}}>test</h1>
+        let targetRect = event.currentTarget.getBoundingClientRect()
+        const testX = event.clientX - targetRect.left;
+        const testY = event.clientY - targetRect.top;
+
+
+        var xPosition = event.clientX - event.target.offsetLeft
+        var yPosition = event.clientY - event.target.offsetTop
+
+        console.log(event.clientX, event.clientY, "event x and y")
+        console.log(testX, testY, "used coords to place box")
+
+        setTestCoords((currTestCoords) => [...currTestCoords, [testX, testY]])
+        setElementCoords((currElementCoords) => [...currElementCoords, [xPosition, yPosition]])
+        
+        // return <h1 style={{position: "absolute", left: `${item.style.left}`, top: `${item.style.top}`, border: "2px solid black"}}>test</h1>
 
     }
 
     return (
         <div className="mapDiv" onClick={handleClick}>
-            
+            {testCoords.map((coords) => {
+                return <button  className='click_buttons' style={{position:  "relative",left: coords[0], top: coords[1], border: "2px solid black"}}></button>
+            })}
         </div>
 
 
