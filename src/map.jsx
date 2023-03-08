@@ -1,11 +1,8 @@
 import './App.css';
 import { useState } from 'react';
-import styled from "styled-components"
-
-const marker = styled.div`
 
 
-`
+
 const Map = () => {
     const [elementCoords, setElementCoords] =useState([])
   
