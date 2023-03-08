@@ -24,6 +24,7 @@ const Map = () => {
 
         console.log(event.clientX, event.clientY, "event x and y")
         console.log(testX, testY, "used coords to place box")
+        console.log(targetRect)
 
         setTestCoords((currTestCoords) => [...currTestCoords, [testX, testY]])
         setElementCoords((currElementCoords) => [...currElementCoords, [xPosition, yPosition]])
@@ -35,7 +36,7 @@ const Map = () => {
     return (
         <div className="mapDiv" onClick={handleClick}>
             {testCoords.map((coords) => {
-                return <button  className='click_buttons' style={{position:  "relative",left: coords[0], top: coords[1], border: "2px solid black"}}></button>
+                return <button  className='click_buttons' style={{position:  "fixed",left: coords[0], top: coords[1], border: "2px solid black"}}></button>
             })}
         </div>
 
