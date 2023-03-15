@@ -1,0 +1,7 @@
+add home page
+recent additons
+recent ticks
+add new climb button
+    pop up with 3 buttons, one for each room. 
+    each room then has its own component
+    

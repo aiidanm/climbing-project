@@ -1,10 +1,11 @@
 import './App.css';
-import  Map from './map';
+import  Map from './components/map';
+import Room1 from './components/room1';
 
 function App() {
   return (
     <div className="App">
-      <Map/>
+      <Room1 />
     </div>
   );
 }
