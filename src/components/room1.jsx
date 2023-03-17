@@ -9,8 +9,8 @@ const Room1 = () => {
         
         
         let targetRect = event.currentTarget.getBoundingClientRect()
-        var xPosition = event.clientX - targetRect.left - 12.5
-        var yPosition = event.clientY - targetRect.top - 12.5
+        var xPosition = event.clientX - targetRect.left - 6.25
+        var yPosition = event.clientY - targetRect.top - 6.25
 
 
         setElementCoords((currElementCoords) => [...currElementCoords, [xPosition, yPosition]])
