@@ -1,11 +1,18 @@
 import './App.css';
-import  Map from './components/map';
 import Room1 from './components/room1';
+import Header from './components/header';
+import {Routes, Route, Link}  from "react-router-dom"
+import NavButtons from './components/navbuttons';
 
 function App() {
   return (
     <div className="App">
-      <Room1 />
+      <Header />
+      <NavButtons />
+      <Routes>
+      <Route path='/room1' element={<Room1 />}></Route>
+
+      </Routes>
     </div>
   );
 }
