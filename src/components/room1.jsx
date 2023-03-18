@@ -5,10 +5,15 @@ const Room1 = () => {
   const [elementCoords, setElementCoords] = useState([]);
 
   const handleClick = (event) => {
-    console.log(event.currentTarget.getBoundingClientRect())
     let targetRect = event.currentTarget.getBoundingClientRect();
+
     var xPosition = event.clientX  - 6.25;
     var yPosition = event.clientY  - 6.25;
+     let imgXPos = targetRect.x 
+    let imgYPos = targetRect.y
+
+    console.log(imgXPos, imgYPos, "bounding rect")
+    console.log(xPosition, yPosition, "event clients")
 
     setElementCoords((currElementCoords) => [
       ...currElementCoords,
