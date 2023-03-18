@@ -30,7 +30,7 @@
 
 .room1_img_div {
   margin-top: 5rem;
-  position: absolute;
+  position: fixed;
   border: 2px solid black;
   width: 20rem;
   height: 20rem;
