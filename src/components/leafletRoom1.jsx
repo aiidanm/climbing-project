@@ -24,18 +24,19 @@ const Leaflet1 = () => {
   };
   return (
     <MapContainer
-      center={[51.505, -0.09]}
-      zoom={13}
+      center={[250, 250]}
+      zoom={0}
       scrollWheelZoom={false}
       id="map"
       crs={CRS.Simple}
       onClick={handleClick}
     >
       <ImageOverlay
+        attribution="aidanMurray"
         url={"Room1.png"}
         bounds={[
           [0, 0],
-          [1080 / 4, 1920 / 4],
+          [500, 500],
         ]}
       />
 
