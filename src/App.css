@@ -37,3 +37,8 @@
   background-image: url("./Room1.png");
   background-size: 100% 100%;
 }
+
+/* leaflet css */
+
+
+#map { height: 500px; width: 500px;}
