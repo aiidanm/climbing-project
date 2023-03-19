@@ -27,14 +27,10 @@ const Leaflet1 = () => {
       id="map"
       onClick={handleClick}
     >
-      <ImageOverlay
-        url={"Room1.png"}
-        bounds={[
-          [0, 0],
-          [1080 / 4, 1920 / 4],
-        ]}
+      <TileLayer attribution="offline img"
+      url={"../maptiles/{z}/{x}/{y}.jpg"}
       />
-
+      
       {markers.map((marker) => {
         return (
           <Marker position={marker}>
