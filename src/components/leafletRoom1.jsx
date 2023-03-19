@@ -8,8 +8,7 @@ import {
 } from "react-leaflet";
 import { useState } from "react";
 import NewClimbForm from "./NewClimbForm";
-
-import * as l from "leaflet";
+import "leaflet/dist/leaflet.css";
 
 const Leaflet1 = () => {
   const [markers, setMarkers] = useState([[51.505, -0.09]]);
@@ -22,13 +21,11 @@ const Leaflet1 = () => {
   };
   return (
     <MapContainer
-      center={[100, 100]}
-      zoom={1}
-      minZoom={-5}
+      center={[51.505, -0.09]}
+      zoom={13}
       scrollWheelZoom={false}
       id="map"
       onClick={handleClick}
-      style={{ height: "50vh", width: "100%" }}
     >
       <ImageOverlay
         url={"Room1.png"}
