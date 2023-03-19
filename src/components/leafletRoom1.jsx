@@ -9,6 +9,9 @@ import {
 import { useState } from "react";
 import NewClimbForm from "./NewClimbForm";
 import "leaflet/dist/leaflet.css";
+import { CRS } from "leaflet";
+
+///home/aidan/climbingApp/climbing-project/public/maptiles
 
 const Leaflet1 = () => {
   const [markers, setMarkers] = useState([[51.505, -0.09]]);
@@ -25,12 +28,17 @@ const Leaflet1 = () => {
       zoom={13}
       scrollWheelZoom={false}
       id="map"
+      crs={CRS.Simple}
       onClick={handleClick}
     >
-      <TileLayer attribution="offline img"
-      url={"../maptiles/{z}/{x}/{y}.jpg"}
+      <ImageOverlay
+        url={"Room1.png"}
+        bounds={[
+          [0, 0],
+          [1080 / 4, 1920 / 4],
+        ]}
       />
-      
+
       {markers.map((marker) => {
         return (
           <Marker position={marker}>
