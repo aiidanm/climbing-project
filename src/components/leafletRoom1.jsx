@@ -5,23 +5,28 @@ import {
   Popup,
   Marker,
   ImageOverlay,
+  useMapEvents,
 } from "react-leaflet";
 import { useState } from "react";
 import NewClimbForm from "./NewClimbForm";
-import "leaflet/dist/leaflet.css";
 import { CRS } from "leaflet";
-
-///home/aidan/climbingApp/climbing-project/public/maptiles
+import L from "leaflet";
 
 const Leaflet1 = () => {
-  const [markers, setMarkers] = useState([[51.505, -0.09]]);
+  const [markers, setMarkers] = useState([[250, 250]]);
+  const [state, setState] = useState("view");
 
-  const handleClick = (e) => {
-    console.log(e);
-    setMarkers((currMarkers) => {
-      return [...currMarkers, []];
+  const MapMarkers = () => {
+    useMapEvents({
+      click(e) {
+        // if (state !== "addClimb") return;
+        setMarkers((currMarkers) => {
+          return [...currMarkers, [e.latlng.lat, e.latlng.lng]];
+        });
+      },
     });
   };
+
   return (
     <MapContainer
       center={[250, 250]}
@@ -29,7 +34,11 @@ const Leaflet1 = () => {
       scrollWheelZoom={false}
       id="map"
       crs={CRS.Simple}
-      onClick={handleClick}
+      maxBounds={[
+        [0, 0],
+        [500, 500],
+      ]}
+      maxBoundsViscosity={1.0}
     >
       <ImageOverlay
         attribution="aidanMurray"
@@ -39,7 +48,7 @@ const Leaflet1 = () => {
           [500, 500],
         ]}
       />
-
+      <MapMarkers />
       {markers.map((marker) => {
         return (
           <Marker position={marker}>
