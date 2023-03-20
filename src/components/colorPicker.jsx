@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-const ColorPicker = () => {
-    const [color, setColor] = useState(null);
+const ColorPicker = ({newClimbColor, setNewClimbColor}) => {
+    
   
     return (
-      <input type="color" value={color} onChange={e => setColor(e.target.value)} />
+      <input type="color" value={newClimbColor} onChange={e => setNewClimbColor(e.target.value)} />
     );
   }
 

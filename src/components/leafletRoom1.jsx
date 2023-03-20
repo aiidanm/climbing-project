@@ -51,7 +51,7 @@ const Leaflet1 = () => {
       <MapMarkers />
       {markers.map((marker) => {
         return (
-          <Marker position={marker}>
+          <Marker position={marker} >
             <Popup>
               <NewClimbForm />
             </Popup>
