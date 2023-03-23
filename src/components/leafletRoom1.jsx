@@ -1,9 +1,6 @@
 import {
   MapContainer,
-  TileLayer,
-  useMap,
   Popup,
-  Marker,
   ImageOverlay,
   useMapEvents,
   Circle,
@@ -11,18 +8,19 @@ import {
 import { useState, useEffect } from "react";
 import NewClimbForm from "./NewClimbForm";
 import { CRS } from "leaflet";
-import L from "leaflet";
-import { getAllClimbs } from "./apirequests";
+import { getRoom1Climbs } from "./apirequests";
+import DisplayClimbInfo from "./displayClimbInfo";
 
 const Leaflet1 = () => {
   const [markers, setMarkers] = useState([]);
-  const [state, setState] = useState("view");
+  const [mode, setMode] = useState("view");
 
   const MapMarkers = () => {
     useMapEvents({
       click(e) {
-        // if (state !== "addClimb") return;
+        if (mode !== "addClimb") return;
         setMarkers((currMarkers) => {
+          setMode("makingClimb");
           return [...currMarkers, [e.latlng.lat, e.latlng.lng]];
         });
       },
@@ -30,45 +28,51 @@ const Leaflet1 = () => {
   };
 
   useEffect(() => {
-    getAllClimbs().then((data) => {
+    getRoom1Climbs().then((data) => {
       setMarkers((currMarkers) => {
-        return data.climbs.map((climb) => [climb.xpos, climb.ypos])
-      })
+        return data.climbs;
+      });
     });
   }, []);
 
   return (
-    <MapContainer
-      center={[250, 250]}
-      zoom={0}
-      scrollWheelZoom={true}
-      id="map"
-      crs={CRS.Simple}
-      maxBounds={[
-        [0, 0],
-        [500, 500],
-      ]}
-      maxBoundsViscosity={1.0}
-    >
-      <ImageOverlay
-        attribution="aidanMurray"
-        url={"Room1.png"}
-        bounds={[
+    <div className="room1_container">
+      <MapContainer
+        center={[250, 250]}
+        zoom={0}
+        scrollWheelZoom={true}
+        id="map"
+        crs={CRS.Simple}
+        maxBounds={[
           [0, 0],
-          [500, 500],
+          [1000, 1000],
         ]}
-      />
-      <MapMarkers />
-      {markers.map((marker) => {
-        return (
-          <Circle center={marker}>
-            <Popup>
-              <NewClimbForm />
-            </Popup>
-          </Circle>
-        );
-      })}
-    </MapContainer>
+        maxBoundsViscosity={10}
+      >
+        <ImageOverlay
+          attribution="aidanMurray"
+          url={"Room1.png"}
+          bounds={[
+            [0, 0],
+            [500, 500],
+          ]}
+        />
+        <MapMarkers />
+        {markers.map((climb) => {
+          return (
+            <Circle center={[climb.xpos, climb.ypos]}>
+              <Popup>
+                <DisplayClimbInfo climb={climb}/>
+              </Popup>
+            </Circle>
+          );
+        })}
+      </MapContainer>
+      <button onClick={() => setMode("addClimb")}>Add a new climb!</button>
+      {mode === "makingClimb" ? (
+        <NewClimbForm setMode={setMode} mode={mode} />
+      ) : null}
+    </div>
   );
 };
 
