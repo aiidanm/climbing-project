@@ -1,4 +1,3 @@
-
 const ColorPicker = ({newClimbColor, setNewClimbColor}) => {
     
   
