@@ -1,6 +1,5 @@
 import ColorPicker from "./colorPicker";
 import { useState, useEffect } from "react";
-import { getAllClimbs } from "./apirequests";
 
 const NewClimbForm = ({mode, setMode}) => {
   const [newClimb, setNewClimb] = useState();
