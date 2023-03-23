@@ -1,5 +1,3 @@
-
-
 const DisplayClimbInfo = ({climb}) => {
 
     return (
