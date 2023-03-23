@@ -1,5 +1,6 @@
 import ColorPicker from "./colorPicker";
 import { useState, useEffect } from "react";
+import { getAllClimbs } from "./apirequests";
 
 const NewClimbForm = () => {
   const [newClimb, setNewClimb] = useState();
@@ -28,6 +29,7 @@ const NewClimbForm = () => {
     setNewClimb({newClimbColor, newClimbName, newClimbPoster, newClimbRating})
   };
 
+
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="climbnameinput">Enter climb name </label>
@@ -42,6 +44,7 @@ const NewClimbForm = () => {
       <input type={"text"} id="posterinput" onChange={handleChange}></input>
       <ColorPicker id="colorpicker" onChange={handleChange} newClimbColor={newClimbColor} setNewClimbColor={setNewClimbColor}/>
       <button type="submit">Add Climb</button>
+      <button >Remove climb</button>
     </form>
   );
 };

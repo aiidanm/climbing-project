@@ -6,14 +6,16 @@ import {
   Marker,
   ImageOverlay,
   useMapEvents,
+  Circle,
 } from "react-leaflet";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NewClimbForm from "./NewClimbForm";
 import { CRS } from "leaflet";
 import L from "leaflet";
+import { getAllClimbs } from "./apirequests";
 
 const Leaflet1 = () => {
-  const [markers, setMarkers] = useState([[250, 250]]);
+  const [markers, setMarkers] = useState([]);
   const [state, setState] = useState("view");
 
   const MapMarkers = () => {
@@ -27,11 +29,19 @@ const Leaflet1 = () => {
     });
   };
 
+  useEffect(() => {
+    getAllClimbs().then((data) => {
+      setMarkers((currMarkers) => {
+        return data.climbs.map((climb) => [climb.xpos, climb.ypos])
+      })
+    });
+  }, []);
+
   return (
     <MapContainer
       center={[250, 250]}
       zoom={0}
-      scrollWheelZoom={false}
+      scrollWheelZoom={true}
       id="map"
       crs={CRS.Simple}
       maxBounds={[
@@ -51,11 +61,11 @@ const Leaflet1 = () => {
       <MapMarkers />
       {markers.map((marker) => {
         return (
-          <Marker position={marker} >
+          <Circle center={marker}>
             <Popup>
               <NewClimbForm />
             </Popup>
-          </Marker>
+          </Circle>
         );
       })}
     </MapContainer>
