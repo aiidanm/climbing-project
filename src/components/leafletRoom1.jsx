@@ -13,16 +13,19 @@ import DisplayClimbInfo from "./displayClimbInfo";
 
 const Leaflet1 = () => {
   const [markers, setMarkers] = useState([]);
-  const [mode, setMode] = useState("view");
+  const [viewForm, setViewForm] = useState(false);
+  const [hasAddedMarker, setHasAddedMarker] = useState(false);
+  const [allowAddMarker, setAllowAddMarker] = useState(false);
   const [newClimb, setNewClimb] = useState();
 
   const MapMarkers = () => {
     useMapEvents({
       click(e) {
-        if (mode !== "addClimb") return;
+        if (!allowAddMarker) return;
         setMarkers((currMarkers) => {
-          setMode("makingClimb");
-          return [...currMarkers, {xpos: e.latlng.lat, ypos: e.latlng.lng}];
+          setHasAddedMarker(true);
+          setAllowAddMarker(false);
+          return [...currMarkers, { xpos: e.latlng.lat, ypos: e.latlng.lng }];
         });
       },
     });
@@ -61,20 +64,37 @@ const Leaflet1 = () => {
         <MapMarkers />
         {markers.map((climb) => {
           return (
-            <Circle center={[climb.xpos, climb.ypos]}>
+            <Circle center={[climb.xpos, climb.ypos]} pathOptions={{color: climb.color || "pink"}}>
               <Popup>
-                <DisplayClimbInfo climb={climb}/>
+                <DisplayClimbInfo climb={climb} />
               </Popup>
             </Circle>
           );
         })}
       </MapContainer>
-      <button onClick={() => setMode("makingClimb")}>Add a new climb!</button>
-      {mode === "makingClimb" ? (
-        <NewClimbForm setMode={setMode} mode={mode} newClimb={newClimb} setNewClimb={setNewClimb}/>
+      <button onClick={() => setViewForm(true)}>Add a new climb!</button>
+      {viewForm ? (
+        <NewClimbForm
+          setMarkers={setMarkers}
+          hasAddedMarker={hasAddedMarker}
+          setHasAddedMarker={setHasAddedMarker}
+          setAllowAddMarker={setAllowAddMarker}
+          allowAddMarker={allowAddMarker}
+          setViewForm={setViewForm}
+          viewForm={viewForm}
+          newClimb={newClimb}
+          setNewClimb={setNewClimb}
+          room={1}
+        />
       ) : null}
     </div>
   );
 };
 
 export default Leaflet1;
+
+//set mode to view on default
+//when new climb clicked, set view to adding climb
+//set mode to adding marker when climb add marker button clicked
+//when marker placed set view to adding climb
+//when submitted set view to view
