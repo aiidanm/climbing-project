@@ -1,8 +1,8 @@
 import ColorPicker from "./colorPicker";
 import { useState, useEffect } from "react";
 
-const NewClimbForm = ({mode, setMode}) => {
-  const [newClimb, setNewClimb] = useState();
+const NewClimbForm = ({mode, setMode, newClimb, setNewClimb}) => {
+  
   const [newClimbName, setNewClimbName] = useState();
   const [newClimbRating, setNewClimbRating] = useState();
   const [newClimbColor, setNewClimbColor] = useState();
@@ -27,6 +27,7 @@ const NewClimbForm = ({mode, setMode}) => {
     e.preventDefault();
     setMode("view")
     setNewClimb({color: newClimbColor, climb_name: newClimbName, poster_name: newClimbPoster, rating: newClimbRating, room: 1})
+    console.log(newClimb)
   };
 
   useEffect(() => {
@@ -37,15 +38,15 @@ const NewClimbForm = ({mode, setMode}) => {
   return (
     <form onSubmit={handleSubmit} className="newClimbForm">
       <label htmlFor="climbnameinput" className="form_items">Enter climb name </label>
-      <input id="climbnameinput" onChange={handleChange} className="form_items"></input>
+      <input id="climbnameinput" onChange={handleChange} className="form_items" required></input>
       <label htmlFor="selectGrade" className="form_items">Rating for grade</label>
-      <select id="selectGrade" onChange={handleChange} className="form_items">
+      <select id="selectGrade" onChange={handleChange} className="form_items" required>
         <option>Lower end</option>
         <option>on grade</option>
         <option>hard for grade</option>
       </select>
       <label htmlFor="posterinput" className="form_items">Your name</label>
-      <input type={"text"} id="posterinput" onChange={handleChange} className="form_items"></input>
+      <input type={"text"} id="posterinput" onChange={handleChange} className="form_items" required></input>
       <label htmlFor="colorpicker">Select Climb colour</label>
       <ColorPicker id="colorpicker" onChange={handleChange} newClimbColor={newClimbColor} setNewClimbColor={setNewClimbColor} className="form_items"/>
       <button type="submit" className="form_items">Add Climb</button>

@@ -14,6 +14,7 @@ import DisplayClimbInfo from "./displayClimbInfo";
 const Leaflet1 = () => {
   const [markers, setMarkers] = useState([]);
   const [mode, setMode] = useState("view");
+  const [newClimb, setNewClimb] = useState();
 
   const MapMarkers = () => {
     useMapEvents({
@@ -21,7 +22,7 @@ const Leaflet1 = () => {
         if (mode !== "addClimb") return;
         setMarkers((currMarkers) => {
           setMode("makingClimb");
-          return [...currMarkers, [e.latlng.lat, e.latlng.lng]];
+          return [...currMarkers, {xpos: e.latlng.lat, ypos: e.latlng.lng}];
         });
       },
     });
@@ -68,9 +69,9 @@ const Leaflet1 = () => {
           );
         })}
       </MapContainer>
-      <button onClick={() => setMode("addClimb")}>Add a new climb!</button>
+      <button onClick={() => setMode("makingClimb")}>Add a new climb!</button>
       {mode === "makingClimb" ? (
-        <NewClimbForm setMode={setMode} mode={mode} />
+        <NewClimbForm setMode={setMode} mode={mode} newClimb={newClimb} setNewClimb={setNewClimb}/>
       ) : null}
     </div>
   );
