@@ -18,6 +18,7 @@ const Leaflet1 = () => {
   const [allowAddMarker, setAllowAddMarker] = useState(false);
   const [newClimb, setNewClimb] = useState();
 
+
   const MapMarkers = () => {
     useMapEvents({
       click(e) {
@@ -25,7 +26,13 @@ const Leaflet1 = () => {
         setMarkers((currMarkers) => {
           setHasAddedMarker(true);
           setAllowAddMarker(false);
-          return [...currMarkers, { xpos: e.latlng.lat, ypos: e.latlng.lng }];
+          setNewClimb((currNewClimb) => {
+            const tclimb = {...currNewClimb}
+            tclimb["xpos"] = e.latlng.lat
+            tclimb["ypos"] = e.latlng.lng
+            return tclimb;
+          })
+          return [...currMarkers, {xpos:e.latlng.lat, ypos: e.latlng.lng, color: newClimb.color }];
         });
       },
     });

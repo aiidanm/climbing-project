@@ -1,5 +1,6 @@
 import ColorPicker from "./colorPicker";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { postNewClimb } from "./apirequests";
 
 const NewClimbForm = ({
   setMarkers,
@@ -12,22 +13,10 @@ const NewClimbForm = ({
   setNewClimb,
   room,
 }) => {
-  const [newClimbName, setNewClimbName] = useState();
-  const [newClimbRating, setNewClimbRating] = useState();
   const [newClimbColor, setNewClimbColor] = useState();
-  const [newClimbPoster, setNewClimbPoster] = useState();
   const [markerError, setMarkerError] = useState(false);
 
   const handleChange = (e) => {
-    if (e.target.id === "climbnameinput") {
-      setNewClimbName(e.target.value);
-    }
-    if (e.target.id === "selectGrade") {
-      setNewClimbRating(e.target.value);
-    }
-    if (e.target.id === "posterinput") {
-      setNewClimbPoster(e.target.value);
-    }
     if (e.target.id === "colorpicker") {
       setNewClimbColor(e.target.value);
     }
@@ -42,40 +31,45 @@ const NewClimbForm = ({
     e.preventDefault();
     if (!hasAddedMarker) {
       setMarkerError(true);
-      setTimeout(() => setMarkerError(false), 3000)
+      setTimeout(() => setMarkerError(false), 3000);
       return;
     } else {
       setViewForm(false);
-      setNewClimb({
-        color: newClimbColor,
-        climb_name: newClimbName,
-        poster_name: newClimbPoster,
-        rating: newClimbRating,
-        room: room,
-      });
-      //submit climb to database here
+      postNewClimb(newClimb);
     }
   };
 
-  const handleCancel = (e) => {
-    e.preventDefault()
-    setHasAddedMarker(false)
-    setAllowAddMarker(false)
-    setViewForm(false)
-    setNewClimb({})
-    setMarkers((currMarkers) => {
-      const newMarkers = [...currMarkers]
-      newMarkers.pop()
-      return newMarkers
-    })
-  }
+  const handleFormChange = (e) => {
+    setNewClimb({
+      color: e.target.parentElement[3].value,
+      climb_name: e.target.parentElement[0].value,
+      poster_name: e.target.parentElement[2].value,
+      rating: e.target.parentElement[1].value,
+      room: room,
+    });
+  };
 
-  useEffect(() => {
-    console.log(newClimb);
-  }, [newClimb]);
+  const handleCancel = (e) => {
+    e.preventDefault();
+    setHasAddedMarker(false);
+    setAllowAddMarker(false);
+    setViewForm(false);
+    setNewClimb({});
+    if (hasAddedMarker) {
+      setMarkers((currMarkers) => {
+        const newMarkers = [...currMarkers];
+        newMarkers.pop();
+        return newMarkers;
+      });
+    }
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="newClimbForm">
+    <form
+      onSubmit={handleSubmit}
+      onChange={handleFormChange}
+      className="newClimbForm"
+    >
       <label htmlFor="climbnameinput" className="form_items">
         Enter climb name{" "}
       </label>
@@ -125,7 +119,9 @@ const NewClimbForm = ({
         Add Climb
       </button>
       {markerError ? <h3>You need to add a marker for this climb!</h3> : null}
-      <button className="form_items" onClick={handleCancel}>Cancel adding climb</button>
+      <button className="form_items" onClick={handleCancel}>
+        Cancel adding climb
+      </button>
     </form>
   );
 };

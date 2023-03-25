@@ -4,10 +4,10 @@ exports.getRoom1Climbs = () => {
   );
 };
 
-exports.postNewClimb = () => {
-  return fetch("https://climbdbtake2.onrender.com/api/climbs", {
+exports.postNewClimb = (climb) => {
+  return fetch("https://climbdbtake2.onrender.com/api/climbs/room1", {
     method: "post",
-    body: JSON.stringify({}),
+    body: JSON.stringify(climb),
     headers: {
       "Content-type": "application/json; charset=UTF-8",
     },
