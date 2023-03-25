@@ -4,7 +4,7 @@ const Header = () => {
 
 
     return (
-        <h1>Clomb</h1>
+        <h1>name needed</h1>
     )
 }
 

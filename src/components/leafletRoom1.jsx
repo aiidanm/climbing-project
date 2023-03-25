@@ -28,8 +28,8 @@ const Leaflet1 = () => {
           setAllowAddMarker(false);
           setNewClimb((currNewClimb) => {
             const tclimb = {...currNewClimb}
-            tclimb["xpos"] = e.latlng.lat
-            tclimb["ypos"] = e.latlng.lng
+            tclimb["xpos"] = String(e.latlng.lat)
+            tclimb["ypos"] = String(e.latlng.lng)
             return tclimb;
           })
           return [...currMarkers, {xpos:e.latlng.lat, ypos: e.latlng.lng, color: newClimb.color }];
@@ -71,7 +71,7 @@ const Leaflet1 = () => {
         <MapMarkers />
         {markers.map((climb) => {
           return (
-            <Circle center={[climb.xpos, climb.ypos]} pathOptions={{color: climb.color || "pink"}}>
+            <Circle center={[Number(climb.xpos), Number(climb.ypos)]} pathOptions={{color: climb.color || "pink"}}>
               <Popup>
                 <DisplayClimbInfo climb={climb} />
               </Popup>
