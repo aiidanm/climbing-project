@@ -11,7 +11,7 @@ exports.postNewClimb = (climb) => {
     headers: {
       "Content-type": "application/json; charset=UTF-8",
     },
-  });
+  }).catch((err) => console.log(err))
 };
 
 exports.getRoom2Climbs = () => {
