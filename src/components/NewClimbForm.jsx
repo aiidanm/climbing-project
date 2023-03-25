@@ -41,11 +41,12 @@ const NewClimbForm = ({
 
   const handleFormChange = (e) => {
     setNewClimb({
-      color: e.target.parentElement[3].value,
+      color: e.target.parentElement[4].value,
       climb_name: e.target.parentElement[0].value,
       poster_name: e.target.parentElement[2].value,
       rating: e.target.parentElement[1].value,
       room: room,
+      description: e.target.parentElement[3].value,
     });
   };
 
@@ -102,6 +103,8 @@ const NewClimbForm = ({
         className="form_items"
         required
       ></input>
+      <label htmlFor="descriptioninput">Enter comments on climb</label>
+      <input id="descriptioninput"></input>
       <label htmlFor="colorpicker">Select Climb colour</label>
       <ColorPicker
         id="colorpicker"

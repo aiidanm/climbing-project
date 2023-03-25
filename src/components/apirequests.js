@@ -1,26 +1,44 @@
 exports.getRoom1Climbs = () => {
-  return fetch("https://climbdbtake2.onrender.com/api/climbs/room1").then((data) =>
-    data.json()
+  return fetch("https://climbdbtake2.onrender.com/api/climbs/room1").then(
+    (data) => data.json()
   );
 };
 
 exports.postNewClimb = (climb) => {
-  return fetch("https://climbdbtake2.onrender.com/api/climbs/room1", {
-    method: "post",
-    body: JSON.stringify(climb),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  }).catch((err) => console.log(err))
+  if (climb.room === 1) {
+    return fetch("https://climbdbtake2.onrender.com/api/climbs/room1", {
+      method: "post",
+      body: JSON.stringify(climb),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    }).catch((err) => console.log(err));
+  } else if (climb.room === 2) {
+    return fetch("https://climbdbtake2.onrender.com/api/climbs/room2", {
+      method: "post",
+      body: JSON.stringify(climb),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    }).catch((err) => console.log(err));
+  } else if (climb.room === 3) {
+    return fetch("https://climbdbtake2.onrender.com/api/climbs/room3", {
+      method: "post",
+      body: JSON.stringify(climb),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    }).catch((err) => console.log(err));
+  }
 };
 
 exports.getRoom2Climbs = () => {
-  return fetch("https://climbdbtake2.onrender.com/api/climbs/room2").then((data) =>
-    data.json()
+  return fetch("https://climbdbtake2.onrender.com/api/climbs/room2").then(
+    (data) => data.json()
   );
 };
 exports.getRoom3Climbs = () => {
-  return fetch("https://climbdbtake2.onrender.com/api/climbs/room3").then((data) =>
-    data.json()
+  return fetch("https://climbdbtake2.onrender.com/api/climbs/room3").then(
+    (data) => data.json()
   );
 };

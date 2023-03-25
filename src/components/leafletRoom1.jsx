@@ -40,14 +40,12 @@ const Leaflet1 = () => {
 
   useEffect(() => {
     getRoom1Climbs().then((data) => {
-      setMarkers((currMarkers) => {
-        return data.climbs;
-      });
+      setMarkers(data.climbs);
     });
   }, []);
 
   return (
-    <div className="room1_container">
+    <div className="room3_container">
       <MapContainer
         center={[250, 250]}
         zoom={0}
@@ -71,7 +69,7 @@ const Leaflet1 = () => {
         <MapMarkers />
         {markers.map((climb) => {
           return (
-            <Circle center={[climb.xpos, climb.ypos]} pathOptions={{color: climb.color || "pink"}}>
+            <Circle center={[climb.xpos, climb.ypos]} radius={4} pathOptions={{color: climb.color || "pink", stroke: false, fillOpacity: 1}} key={climb.climb_id}>
               <Popup>
                 <DisplayClimbInfo climb={climb} />
               </Popup>
