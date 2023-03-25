@@ -11,7 +11,7 @@ import { CRS } from "leaflet";
 import { getRoom3Climbs } from "./apirequests";
 import DisplayClimbInfo from "./displayClimbInfo";
 
-const Leaflet1 = () => {
+const Leaflet3 = () => {
   const [markers, setMarkers] = useState([]);
   const [viewForm, setViewForm] = useState(false);
   const [hasAddedMarker, setHasAddedMarker] = useState(false);
@@ -106,7 +106,7 @@ const Leaflet1 = () => {
   );
 };
 
-export default Leaflet1;
+export default Leaflet3;
 
 //set mode to view on default
 //when new climb clicked, set view to adding climb

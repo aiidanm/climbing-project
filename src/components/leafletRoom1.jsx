@@ -45,7 +45,7 @@ const Leaflet1 = () => {
   }, []);
 
   return (
-    <div className="room3_container">
+    <div className="room1_container">
       <MapContainer
         center={[250, 250]}
         zoom={0}

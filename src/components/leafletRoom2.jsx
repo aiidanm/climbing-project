@@ -11,7 +11,7 @@ import { CRS } from "leaflet";
 import { getRoom2Climbs } from "./apirequests";
 import DisplayClimbInfo from "./displayClimbInfo";
 
-const Leaflet1 = () => {
+const Leaflet2 = () => {
   const [markers, setMarkers] = useState([]);
   const [viewForm, setViewForm] = useState(false);
   const [hasAddedMarker, setHasAddedMarker] = useState(false);
@@ -45,7 +45,7 @@ const Leaflet1 = () => {
   }, []);
 
   return (
-    <div className="room2_container">
+    <div className="room1_container">
       <MapContainer
         center={[250, 250]}
         zoom={0}
@@ -96,7 +96,7 @@ const Leaflet1 = () => {
   );
 };
 
-export default Leaflet1;
+export default Leaflet2;
 
 //set mode to view on default
 //when new climb clicked, set view to adding climb
