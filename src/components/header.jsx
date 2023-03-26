@@ -1,7 +1,9 @@
+
+
 const Header = () => {
   return (
     <>
-      <h1>Crux</h1>
+      <img src="Cruxlogo.png" id="logo"></img>
       <p className="hiremelink">
         <a href="https://www.linkedin.com/in/aidanalexandermurray/">
           hire me pls
