@@ -1,11 +1,18 @@
-
 const Header = () => {
+  return (
+    <>
+      <img
+        src="Cruxlogo.png"
+        id="logo"
+        alt="the word Crux but the c is a carabiner"
+      ></img>
+      <p className="hiremelink">
+        <a href="https://www.linkedin.com/in/aidanalexandermurray/">
+          hire me pls
+        </a>
+      </p>
+    </>
+  );
+};
 
-
-
-    return (
-        <h1>name needed</h1>
-    )
-}
-
-export default Header
+export default Header;

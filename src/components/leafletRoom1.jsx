@@ -18,7 +18,6 @@ const Leaflet1 = () => {
   const [allowAddMarker, setAllowAddMarker] = useState(false);
   const [newClimb, setNewClimb] = useState();
 
-
   const MapMarkers = () => {
     useMapEvents({
       click(e) {
@@ -28,11 +27,14 @@ const Leaflet1 = () => {
           setAllowAddMarker(false);
           setNewClimb((currNewClimb) => {
             const tclimb = {...currNewClimb}
-            tclimb["xpos"] = String(e.latlng.lat)
-            tclimb["ypos"] = String(e.latlng.lng)
+            tclimb["xpos"] = e.latlng.lat
+            tclimb["ypos"] = e.latlng.lng
             return tclimb;
-          })
-          return [...currMarkers, {xpos:e.latlng.lat, ypos: e.latlng.lng, color: newClimb.color }];
+          });
+          return [
+            ...currMarkers,
+            { xpos: e.latlng.lat, ypos: e.latlng.lng, color: newClimb.color },
+          ];
         });
       },
     });
@@ -40,9 +42,7 @@ const Leaflet1 = () => {
 
   useEffect(() => {
     getRoom1Climbs().then((data) => {
-      setMarkers((currMarkers) => {
-        return data.climbs;
-      });
+      setMarkers(data.climbs);
     });
   }, []);
 
@@ -51,7 +51,7 @@ const Leaflet1 = () => {
       <MapContainer
         center={[250, 250]}
         zoom={0}
-        scrollWheelZoom={true}
+        scrollWheelZoom={false}
         id="map"
         crs={CRS.Simple}
         maxBounds={[
@@ -71,7 +71,7 @@ const Leaflet1 = () => {
         <MapMarkers />
         {markers.map((climb) => {
           return (
-            <Circle center={[Number(climb.xpos), Number(climb.ypos)]} pathOptions={{color: climb.color || "pink"}}>
+            <Circle center={[climb.xpos, climb.ypos]} pathOptions={{color: climb.color || "pink"}}>
               <Popup>
                 <DisplayClimbInfo climb={climb} />
               </Popup>

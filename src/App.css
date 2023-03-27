@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  
+  height: 100vh;
 }
 
 .mapDiv {
@@ -8,9 +10,9 @@
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
-  border: 2px solid black;
+  border: 2px solid #7A306C;
   width: 80%;
-  height: 80%
+  height: 80%;
 }
 
 .click_buttons {
@@ -25,13 +27,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
 }
 
 .room1_img_div {
   margin-top: 5rem;
   position: fixed;
-  border: 2px solid black;
+  border: 2px solid #7A306C;
   width: 20rem;
   height: 20rem;
   background-image: url("./Room1.png");
@@ -40,21 +41,21 @@
 
 /* leaflet css */
 
-
-#map { height: 500px; width: 500px;}
+#map {
+  height: 500px;
+  width: 500px;
+}
 
 .newClimbForm {
-  border: 2px solid black;
+  border: 2px solid #7A306C;
   border-radius: 8px;
   display: flex;
   align-items: center;
   flex-direction: column;
   width: fit-content;
-  
-
 }
 
-.form_items  {
+.form_items {
   margin: 2px;
 }
 
@@ -63,8 +64,26 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-
 }
 
+.hiremelink {
+  font-size: xx-small;
+}
 
+#logo {
+  margin-top: 5%;
+  height: 10%;
+}
 
+#map {
+  width: 90%;
+  border: 2px solid #7A306C;
+}
+
+button{
+  border: 2px solid #7A306C;
+  color: #000F08;
+  background-color: white;
+  margin-right: 2px;
+  margin-top: 5px;
+}
