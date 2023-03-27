@@ -4,7 +4,7 @@ const Header = () => {
       <img
         src="Cruxlogo.png"
         id="logo"
-        alt="image of the word Crux but the c is a carabiner"
+        alt="the word Crux but the c is a carabiner"
       ></img>
       <p className="hiremelink">
         <a href="https://www.linkedin.com/in/aidanalexandermurray/">
