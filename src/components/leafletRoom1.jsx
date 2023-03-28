@@ -16,7 +16,7 @@ const Leaflet1 = () => {
   const [viewForm, setViewForm] = useState(false);
   const [hasAddedMarker, setHasAddedMarker] = useState(false);
   const [allowAddMarker, setAllowAddMarker] = useState(false);
-  const [newClimb, setNewClimb] = useState();
+  const [newClimb, setNewClimb] = useState({});
 
   const MapMarkers = () => {
     useMapEvents({
@@ -45,6 +45,8 @@ const Leaflet1 = () => {
       setMarkers(data.climbs);
     });
   }, []);
+
+  
 
   return (
     <div className="room1_container">
