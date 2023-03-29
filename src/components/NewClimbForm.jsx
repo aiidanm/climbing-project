@@ -14,7 +14,6 @@ const NewClimbForm = ({
   room,
 }) => {
   const [newClimbColor, setNewClimbColor] = useState();
-  const [markerError, setMarkerError] = useState(false);
   const [showFormError, setShowFormError] = useState(false);
 
   const handleChange = (e) => {
@@ -44,14 +43,8 @@ const NewClimbForm = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!hasAddedMarker) {
-      setMarkerError(true);
-      setTimeout(() => setMarkerError(false), 3000);
-      return;
-    } else {
       setViewForm(false);
       postNewClimb(newClimb);
-    }
   };
 
   const handleFormChange = (e) => {
