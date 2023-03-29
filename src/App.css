@@ -1,61 +1,42 @@
 .App {
+  display: flex;
   text-align: center;
-  
+  flex-direction: column;
   height: 100vh;
 }
 
-.mapDiv {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  border: 2px solid #7A306C;
-  width: 80%;
-  height: 80%;
-}
-
-.click_buttons {
-  background-color: brown;
-  height: 12.5px;
-  width: 12.5px;
-  border-radius: 100%;
-  position: absolute;
-}
-
-.room1page_container {
+.mainContainer {
   display: flex;
-  flex-direction: column;
+  text-align: center;
+  align-content: center;
   align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 600px;
+  width: 100%;
 }
 
-.room1_img_div {
-  margin-top: 5rem;
-  position: fixed;
-  border: 2px solid #7A306C;
-  width: 20rem;
-  height: 20rem;
-  background-image: url("./Room1.png");
-  background-size: 100% 100%;
+.nav_container {
+  width: 100%;
 }
 
 /* leaflet css */
 
 #map {
-  width: 500px;
-  height: 500px;
+  aspect-ratio: 1;
+  width: 80%;
   max-width: 500px;
-  max-width: 500px
+  border-radius: 2px;
+  border: 5px solid #7a306c;
 }
 
 .newClimbForm {
-  border: 2px solid #7A306C;
-  border-radius: 8px;
+  border: 5px solid #7a306c;
+  border-radius: 2px;
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 90%;
-
+  width: 80%;
 }
 
 .form_items {
@@ -63,12 +44,13 @@
 }
 
 .room1_container {
+  margin-top: 1%;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  width: 95%;
-  height: auto;
+  width: 100%;
+  height: 100%;
 }
 
 .hiremelink {
@@ -77,20 +59,17 @@
 
 #logo {
   margin-top: 5%;
-  height: 10%;
+  height: 5rem;
+  width: 20rem;
 }
 
-#map {
-  width: 90%;
-  max-width: 500px;
-  border: 2px solid #7A306C;
-}
 
-button{
-  border: 2px solid #7A306C;
-  color: #000F08;
+button {
+  border: 2px solid #7a306c;
+  color: #000f08;
   background-color: white;
   margin-right: 2px;
   margin-top: 5px;
-  border-radius: 10%;
+  border-radius: 2px;
+  width: 27%;
 }

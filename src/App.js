@@ -10,6 +10,7 @@ import Leaflet3 from "./components/leafletRoom3";
 function App() {
   return (
     <div className="App">
+      <div className="mainContainer">
       <Header />
       <NavButtons />
       <Routes>
@@ -17,6 +18,7 @@ function App() {
         <Route path="room2" element={<Leaflet2 />}></Route>
         <Route path="room3" element={<Leaflet3 />}></Route>
       </Routes>
+      </div>
     </div>
   );
 }

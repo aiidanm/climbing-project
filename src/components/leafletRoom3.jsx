@@ -54,11 +54,6 @@ const Leaflet3 = () => {
         scrollWheelZoom={true}
         id="map"
         crs={CRS.Simple}
-        maxBounds={[
-          [0, 0],
-          [1000, 1000],
-        ]}
-        maxBoundsViscosity={10}
       >
         <ImageOverlay
           attribution="aidanMurray"

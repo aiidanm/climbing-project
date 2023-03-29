@@ -26,9 +26,9 @@ const Leaflet1 = () => {
           setHasAddedMarker(true);
           setAllowAddMarker(false);
           setNewClimb((currNewClimb) => {
-            const tclimb = {...currNewClimb}
-            tclimb["xpos"] = e.latlng.lat
-            tclimb["ypos"] = e.latlng.lng
+            const tclimb = { ...currNewClimb };
+            tclimb["xpos"] = e.latlng.lat;
+            tclimb["ypos"] = e.latlng.lng;
             return tclimb;
           });
           return [
@@ -46,21 +46,14 @@ const Leaflet1 = () => {
     });
   }, []);
 
-  
-
   return (
     <div className="room1_container">
       <MapContainer
         center={[250, 250]}
+        scrollWheelZoom={true}
         zoom={0}
-        scrollWheelZoom={false}
         id="map"
         crs={CRS.Simple}
-        maxBounds={[
-          [0, -125],
-          [1000, 1000],
-        ]}
-        maxBoundsViscosity={0}
       >
         <ImageOverlay
           attribution="aidanMurray"
@@ -73,7 +66,15 @@ const Leaflet1 = () => {
         <MapMarkers />
         {markers.map((climb) => {
           return (
-            <Circle center={[climb.xpos, climb.ypos]} radius={4} pathOptions={{color: climb.color || "pink", stroke: false, fillOpacity: 1}}>
+            <Circle
+              center={[climb.xpos, climb.ypos]}
+              radius={4}
+              pathOptions={{
+                color: climb.color || "pink",
+                stroke: false,
+                fillOpacity: 1,
+              }}
+            >
               <Popup>
                 <DisplayClimbInfo climb={climb} />
               </Popup>
