@@ -42,8 +42,10 @@
 /* leaflet css */
 
 #map {
-  height: 500px;
-  width: 500px;
+  width: 95%;
+  height: 40%;
+  max-width: 500px;
+  max-width: 500px
 }
 
 .newClimbForm {
@@ -64,6 +66,8 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  width: 95%;
+  height: auto;
 }
 
 .hiremelink {
