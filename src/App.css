@@ -42,8 +42,8 @@
 /* leaflet css */
 
 #map {
-  width: 95%;
-  height: 40%;
+  width: 500px;
+  height: 500px;
   max-width: 500px;
   max-width: 500px
 }

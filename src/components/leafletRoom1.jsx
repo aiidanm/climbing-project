@@ -57,10 +57,10 @@ const Leaflet1 = () => {
         id="map"
         crs={CRS.Simple}
         maxBounds={[
-          [0, 0],
+          [0, -125],
           [1000, 1000],
         ]}
-        maxBoundsViscosity={10}
+        maxBoundsViscosity={0}
       >
         <ImageOverlay
           attribution="aidanMurray"
