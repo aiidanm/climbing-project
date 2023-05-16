@@ -55,6 +55,8 @@ const NewClimbForm = ({
       rating: e.target.parentElement.parentElement[1].value,
       room: room,
       description: e.target.parentElement.parentElement[3].value,
+      type: " ",
+      posted_by: "Aidan"
     });
   };
 
