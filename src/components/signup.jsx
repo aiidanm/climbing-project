@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { postNewUser } from "./apirequests";
 
 const SignupPage = () => {
   const [passwordMatchError, setPasswordMatchError] = useState(false);
@@ -21,6 +22,9 @@ const SignupPage = () => {
       setTimeout(() => {
         setPasswordMatchError(false);
       }, 3000);
+    } else {
+      console.log("new user submitted")
+      postNewUser(newUser)
     }
   };
 

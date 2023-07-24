@@ -17,6 +17,8 @@ const Leaflet1 = () => {
   const [hasAddedMarker, setHasAddedMarker] = useState(false);
   const [allowAddMarker, setAllowAddMarker] = useState(false);
   const [newClimb, setNewClimb] = useState({});
+  const [viewMap1, setViewMap1] = useState(true)
+  const [showAdd, setShowAdd] = useState(true)
 
   const MapMarkers = () => {
     useMapEvents({
@@ -42,14 +44,13 @@ const Leaflet1 = () => {
 
   useEffect(() => {
     getRoom1Climbs().then((data) => {
-      console.log(data)
       if (data.climbs) setMarkers(data.climbs);
     });
   }, []);
 
   return (
     <div className="room1_container">
-      <MapContainer
+      {viewMap1 ? (<MapContainer
         center={[250, 250]}
         scrollWheelZoom={true}
         zoom={0}
@@ -82,8 +83,13 @@ const Leaflet1 = () => {
             </Circle>
           );
         })}
-      </MapContainer>
-      <button onClick={() => setViewForm(true)}>Add a new climb!</button>
+      </MapContainer>) : null}
+      {showAdd ? (<button onClick={() => {
+        setViewForm(true)
+        setViewMap1(false)
+        setShowAdd(false)
+      }}>Add a new climb!</button>) : null}
+      
       {viewForm ? (
         <NewClimbForm
           setMarkers={setMarkers}
@@ -96,6 +102,7 @@ const Leaflet1 = () => {
           newClimb={newClimb}
           setNewClimb={setNewClimb}
           room={1}
+          setViewMap1={setViewMap1}
         />
       ) : null}
     </div>

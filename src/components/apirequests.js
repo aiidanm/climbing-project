@@ -27,3 +27,23 @@ exports.getRoom3Climbs = () => {
     (data) => data.json().then((parseddata) => parseddata)
   );
 };
+
+exports.postNewUser = (user) => {
+  return fetch ("https://cruxclimbingdb.onrender.com/api/users", {
+    method: "post",
+    body: JSON.stringify(user),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8"
+    }
+  });
+};
+
+exports.login = (user) => {
+  return fetch("https://cruxclimbingdb.onrender.com/api/auth/login", {
+    method: "post",
+    body: JSON.stringify(user),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8"
+    }
+  })
+}
