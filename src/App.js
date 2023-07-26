@@ -6,13 +6,13 @@ import Leaflet1 from "./components/leafletRoom1";
 import Leaflet2 from "./components/leafletRoom2";
 import Leaflet3 from "./components/leafletRoom3";
 import { useState } from "react";
-import UserButtons from "./components/userbuttons";
+// import UserButtons from "./components/userbuttons";
 import SignupPage from "./components/signup";
 import LoginPage from "./components/login";
 import { Link } from "react-router-dom";
 
 function App() {
-  const [hasloggedin, SetHasLoggedIn] = useState(false);
+  const [hasloggedin] = useState(false);
 
   return (
     <div className="App">
