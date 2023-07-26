@@ -4,7 +4,7 @@ import { login } from "./apirequests"
 const LoginPage = () => {
 
     const [loginDetails, setLoginDetails] = useState({})
-    const [isDataError, setIsDataError] = useState(false)
+    // const [isDataError, setIsDataError] = useState(false)
 
     const handleChange = (e) => {
             setLoginDetails({

@@ -17,7 +17,8 @@ const Leaflet2 = () => {
   const [hasAddedMarker, setHasAddedMarker] = useState(false);
   const [allowAddMarker, setAllowAddMarker] = useState(false);
   const [newClimb, setNewClimb] = useState();
-
+  const [showAdd, setShowAdd] = useState(true)
+  const [viewMap2, setViewMap2] = useState(true)
 
   const MapMarkers = () => {
     useMapEvents({
@@ -34,6 +35,7 @@ const Leaflet2 = () => {
           })
           return [...currMarkers, {xpos:e.latlng.lat, ypos: e.latlng.lng, color: newClimb.color }];
         });
+        setTimeout(() => {setViewMap2(false)}, 1000)
       },
     });
   };
@@ -46,7 +48,7 @@ const Leaflet2 = () => {
 
   return (
     <div className="room1_container">
-      <MapContainer
+      {viewMap2 ? (<MapContainer
         center={[250, 250]}
         zoom={0}
         scrollWheelZoom={true}
@@ -71,8 +73,12 @@ const Leaflet2 = () => {
             </Circle>
           );
         })}
-      </MapContainer>
-      <button onClick={() => setViewForm(true)}>Add a new climb!</button>
+      </MapContainer>) : null}
+      {showAdd ? (<button onClick={() => {
+        setViewForm(true)
+        setShowAdd(false)
+        setViewMap2(false)
+      }}>Add a new climb!</button>) : null}
       {viewForm ? (
         <NewClimbForm
           setMarkers={setMarkers}
@@ -85,6 +91,7 @@ const Leaflet2 = () => {
           newClimb={newClimb}
           setNewClimb={setNewClimb}
           room={2}
+          setViewMap={setViewMap2}
         />
       ) : null}
     </div>

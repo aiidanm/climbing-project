@@ -37,7 +37,9 @@ const Leaflet1 = () => {
             ...currMarkers,
             { xpos: e.latlng.lat, ypos: e.latlng.lng, color: newClimb.color },
           ];
-        });
+        })
+        setTimeout(() => {setViewMap1(false)}, 1000)
+        
       },
     });
   };
@@ -102,7 +104,8 @@ const Leaflet1 = () => {
           newClimb={newClimb}
           setNewClimb={setNewClimb}
           room={1}
-          setViewMap1={setViewMap1}
+          setViewMap={setViewMap1}
+          setShowAdd={setShowAdd}
         />
       ) : null}
     </div>
