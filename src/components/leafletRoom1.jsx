@@ -72,7 +72,7 @@ const Leaflet1 = () => {
           return (
             <Circle
               center={[climb.xpos, climb.ypos]}
-              radius={4}
+              radius={6}
               pathOptions={{
                 color: climb.color || "pink",
                 stroke: false,

@@ -66,7 +66,7 @@ const Leaflet2 = () => {
         <MapMarkers />
         {markers.map((climb) => {
           return (
-            <Circle center={[climb.xpos, climb.ypos]} radius={4} pathOptions={{color: climb.color || "pink", stroke: false, fillOpacity: 1}}>
+            <Circle center={[climb.xpos, climb.ypos]} radius={6} pathOptions={{color: climb.color || "pink", stroke: false, fillOpacity: 1}}>
               <Popup>
                 <DisplayClimbInfo climb={climb} />
               </Popup>

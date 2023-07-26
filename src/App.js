@@ -9,6 +9,7 @@ import { useState } from "react";
 import UserButtons from "./components/userbuttons";
 import SignupPage from "./components/signup";
 import LoginPage from "./components/login";
+import { Link } from "react-router-dom";
 
 function App() {
   const [hasloggedin, SetHasLoggedIn] = useState(false);
@@ -16,10 +17,10 @@ function App() {
   return (
     <div className="App">
       <div className="mainContainer">
-        <Header />
+        <Link to="/"><Header /></Link>
         {hasloggedin ? <NavButtons /> : null}
         <Routes>
-          <Route path="/" element={<UserButtons />}></Route>
+          <Route path="/" element={<NavButtons />}></Route>
           <Route path="room1" element={<Leaflet1 />}></Route>
           <Route path="room2" element={<Leaflet2 />}></Route>
           <Route path="room3" element={<Leaflet3 />}></Route>
