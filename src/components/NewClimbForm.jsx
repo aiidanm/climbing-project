@@ -12,6 +12,8 @@ const NewClimbForm = ({
   newClimb,
   setNewClimb,
   room,
+  setViewMap,
+  setShowAdd
 }) => {
   const [newClimbColor, setNewClimbColor] = useState();
   const [showFormError, setShowFormError] = useState(false);
@@ -38,6 +40,7 @@ const NewClimbForm = ({
     } else {
       setShowFormError(false);
       setAllowAddMarker(true);
+      setViewMap(true)
     }
   };
 
@@ -73,6 +76,8 @@ const NewClimbForm = ({
         return newMarkers;
       });
     }
+    setShowAdd(true)
+    setViewMap(true)
   };
 
   return (
