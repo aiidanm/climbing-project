@@ -53,11 +53,11 @@ exports.postNewUser = (user) => {
 };
 
 exports.login = (user) => {
-  return fetch("https://cruxclimbingdb.onrender.com/api/auth/login", {
+  return fetch("https://climbingdatabasefirebase.onrender.com/api/signin", {
     method: "post",
     body: JSON.stringify(user),
     headers: {
       "Content-type": "application/json; charset=UTF-8"
     }
-  })
+  }).then((user) => user.json().then((parsedUser) => console.log(parsedUser)))
 }
