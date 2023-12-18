@@ -48,6 +48,7 @@ const NewClimbForm = ({
     e.preventDefault();
       setViewForm(false);
       postNewClimb(newClimb);
+      setViewMap(true)
   };
 
   const handleFormChange = (e) => {

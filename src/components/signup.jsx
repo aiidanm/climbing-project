@@ -2,8 +2,8 @@ import { useState } from "react";
 import { postNewUser } from "./apirequests";
 
 const SignupPage = () => {
-  const [passwordMatchError, setPasswordMatchError] = useState(false);
-  const [doPasswordMatch, SetdoPasswordMatch] = useState(false);
+  const [showSignupError, setShowSignupError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("")
   const [newUser, setNewUser] = useState({ name: "", password: "", email: "" });
 
   const handleChange = (e) => {
@@ -14,17 +14,29 @@ const SignupPage = () => {
     });
   };
   const handleSubmit = (e) => {
-    console.log(newUser );
     e.preventDefault();
     if (e.target[3].value !== e.target[2].value) {
-      setPasswordMatchError(true);
-      SetdoPasswordMatch(false);
+      setShowSignupError(true);
       setTimeout(() => {
-        setPasswordMatchError(false);
+        setShowSignupError(false);
       }, 3000);
     } else {
-      console.log("new user submitted")
-      postNewUser(newUser)
+      postNewUser(newUser).then((response) => {
+        if (response.message){
+          setErrorMessage(response.message)
+          setShowSignupError(true)
+          setTimeout(() => {
+            setShowSignupError(false)
+          },3000)
+        }
+        else {
+          setErrorMessage("Signup Successful, please return to the login screen to login")
+          setShowSignupError(true)
+          setTimeout(() => {
+            setShowSignupError(false)
+          },3000)
+        }
+        })
     }
   };
 
@@ -64,8 +76,8 @@ const SignupPage = () => {
         required
         type="password"
       ></input>
-      {passwordMatchError ? (
-        <h2>Password and confirmation dont match</h2>
+      {showSignupError ? (
+        <h2>{errorMessage}</h2>
       ) : null}
       <button className="form_items">Signup!</button>
     </form>

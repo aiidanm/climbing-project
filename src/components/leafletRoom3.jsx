@@ -44,8 +44,8 @@ const Leaflet3 = () => {
   };
 
   useEffect(() => {
-    getRoom3Climbs().then((data) => {
-      setMarkers(data.climbs);
+    getRoom3Climbs().then((climbs) => {
+      setMarkers(climbs);
     });
   }, []);
 
