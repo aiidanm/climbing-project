@@ -1,4 +1,14 @@
+import { useEffect, useState, useContext } from "react";
+import { UserContext } from "../App";
+
 const Header = () => {
+  const { user, setUser } = useContext(UserContext);
+  const onLogoutClick = (e) => {
+    e.preventDefault();
+    setUser();
+    localStorage.clear();
+  };
+
   return (
     <>
       <img
@@ -11,6 +21,8 @@ const Header = () => {
           hire me pls
         </a>
       </p>
+      <p>logged in as: {user}</p>
+      <button onClick={onLogoutClick}>LogOut</button>
     </>
   );
 };

@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 exports.getRoom1Climbs = () => {
   return fetch("https://climbingdatabasefirebase.onrender.com/climbs/all").then(
     (data) =>
@@ -58,7 +56,6 @@ exports.postNewUser = (user) => {
 };
 
 exports.login = (user) => {
-
   return fetch("https://climbingdatabasefirebase.onrender.com/api/signin", {
     method: "post",
     body: JSON.stringify(user),
