@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { UserContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -20,7 +21,10 @@ const auth = getAuth(app);
 
 const LoginPage = () => {
   const [loginDetails, setLoginDetails] = useState({});
+  const [message, setMessage] = useState(null);
+  const [showMessage, setShowMessage] = useState(false);
   const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     setLoginDetails({
@@ -31,6 +35,9 @@ const LoginPage = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    setMessage("Logging in...");
+    setShowMessage(true);
+
     signInWithEmailAndPassword(auth, loginDetails.email, loginDetails.password)
       .then((userCredential) => {
         localStorage.setItem("user", userCredential.user);
@@ -39,6 +46,11 @@ const LoginPage = () => {
           accessToken: userCredential.user.accessToken,
         };
         setUser(userCredential.user.email);
+        setMessage("logged in");
+        setTimeout(() => {
+          setShowMessage(false);
+          navigate("/room1");
+        }, 3000);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -56,8 +68,9 @@ const LoginPage = () => {
         <label htmlFor="loginemail">Email address</label>
         <input id="loginemail"></input>
         <label htmlFor="loginpassword">Password</label>
-        <input id="loginpasword" type="password"></input>
+        <input id="loginpassword" type="password"></input>
         <button type="submit">Login</button>
+        {showMessage ? <p>{message}</p> : null}
       </form>
     </>
   );
