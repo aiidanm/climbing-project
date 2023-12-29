@@ -1,10 +1,31 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../App";
 import { postNewUser } from "./apirequests";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+
+import { initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA3PuUCQ2CG091f43W_-hidQbQzwy8PMTo",
+  authDomain: "climbing-app-c27f6.firebaseapp.com",
+  projectId: "climbing-app-c27f6",
+  storageBucket: "climbing-app-c27f6.appspot.com",
+  messagingSenderId: "260370634692",
+  appId: "1:260370634692:web:ba55c2d89bb278ac283691",
+  measurementId: "G-RVCMRM5CC5",
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
 
 const SignupPage = () => {
   const [showSignupError, setShowSignupError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("")
+  const [errorMessage, setErrorMessage] = useState("");
   const [newUser, setNewUser] = useState({ name: "", password: "", email: "" });
+  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setNewUser({
@@ -22,21 +43,29 @@ const SignupPage = () => {
       }, 3000);
     } else {
       postNewUser(newUser).then((response) => {
-        if (response.message){
-          setErrorMessage(response.message)
-          setShowSignupError(true)
+        if (response.message) {
+          setErrorMessage(response.message);
+          setShowSignupError(true);
           setTimeout(() => {
-            setShowSignupError(false)
-          },3000)
+            setShowSignupError(false);
+          }, 3000);
+        } else {
+          setErrorMessage("Signing up and logging in...");
+          setShowSignupError(true);
+          signInWithEmailAndPassword(auth, newUser.email, newUser.password)
+            .then((userCredential) => {
+              localStorage.setItem("user", userCredential.user);
+              setUser(userCredential.user.email);
+              setTimeout(() => {
+                navigate("/room1");
+              }, 1000);
+            })
+            .catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+            });
         }
-        else {
-          setErrorMessage("Signup Successful, please return to the login screen to login")
-          setShowSignupError(true)
-          setTimeout(() => {
-            setShowSignupError(false)
-          },3000)
-        }
-        })
+      });
     }
   };
 
@@ -76,9 +105,7 @@ const SignupPage = () => {
         required
         type="password"
       ></input>
-      {showSignupError ? (
-        <h2>{errorMessage}</h2>
-      ) : null}
+      {showSignupError ? <h2>{errorMessage}</h2> : null}
       <button className="form_items">Signup!</button>
     </form>
   );
