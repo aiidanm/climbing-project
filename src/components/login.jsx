@@ -50,7 +50,7 @@ const LoginPage = () => {
         setTimeout(() => {
           setShowMessage(false);
           navigate("/room1");
-        }, 3000);
+        }, 1000);
       })
       .catch((error) => {
         const errorCode = error.code;

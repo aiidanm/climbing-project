@@ -32,7 +32,15 @@ function App() {
               <Route path="signup" element={<SignupPage />}></Route>
             </Routes>
           ) : (
-            <Navigate to="/login" />
+            <div className="nav_container">
+            <Link to="/signup">
+            <button id="room1button">Signup</button>
+            </Link>
+            <Link to="/login">
+            <button>Login</button>
+            </Link>
+            
+            </div>
           )}
 
           <Routes>

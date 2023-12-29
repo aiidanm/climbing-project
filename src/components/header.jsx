@@ -21,8 +21,11 @@ const Header = () => {
           hire me pls
         </a>
       </p>
-      <p>logged in as: {user}</p>
-      <button onClick={onLogoutClick}>LogOut</button>
+      {user ? <p>logged in as: {user}</p> : null}
+
+      
+      {user ? <button onClick={onLogoutClick}>LogOut</button> : null}
+      
     </>
   );
 };
