@@ -16,11 +16,7 @@ const Header = () => {
         id="logo"
         alt="the word Crux but the c is a carabiner"
       ></img>
-      <p className="hiremelink">
-        <a href="https://www.linkedin.com/in/aidanalexandermurray/">
-          hire me pls
-        </a>
-      </p>
+    
       {user ? <p>logged in as: {user}</p> : null}
 
       
