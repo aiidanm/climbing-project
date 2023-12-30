@@ -1,7 +1,10 @@
 import { useState, useContext } from "react";
 import { UserContext } from "../App";
-import { postNewUser } from "./apirequests";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 import { initializeApp } from "firebase/app";
@@ -42,30 +45,31 @@ const SignupPage = () => {
         setShowSignupError(false);
       }, 3000);
     } else {
-      postNewUser(newUser).then((response) => {
-        if (response.message) {
-          setErrorMessage(response.message);
-          setShowSignupError(true);
-          setTimeout(() => {
-            setShowSignupError(false);
-          }, 3000);
-        } else {
+      createUserWithEmailAndPassword(auth, newUser.email, newUser.password)
+        .then((userCredential) => {
           setErrorMessage("Signing up and logging in...");
           setShowSignupError(true);
-          signInWithEmailAndPassword(auth, newUser.email, newUser.password)
-            .then((userCredential) => {
-              localStorage.setItem("user", userCredential.user);
-              setUser(userCredential.user.email);
-              setTimeout(() => {
-                navigate("/room1");
-              }, 1000);
-            })
-            .catch((error) => {
-              const errorCode = error.code;
-              const errorMessage = error.message;
-            });
-        }
-      });
+          localStorage.setItem("user", JSON.stringify(userCredential.user));
+          
+          updateProfile(auth.currentUser, {
+            displayName: `${newUser.name}`,
+          }).then(() => {
+            setUser(newUser.name)
+            setTimeout(() => {
+              navigate("/room1");
+            }, 1000);
+          });
+        })
+        .catch((error) => {
+          const errorMessage = error.message;
+          if (errorMessage) {
+            setErrorMessage(errorMessage);
+            setShowSignupError(true);
+            setTimeout(() => {
+              setShowSignupError(false);
+            }, 3000);
+          }
+        });
     }
   };
 

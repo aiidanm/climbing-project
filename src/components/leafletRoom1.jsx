@@ -5,11 +5,12 @@ import {
   useMapEvents,
   Circle,
 } from "react-leaflet";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import NewClimbForm from "./NewClimbForm";
 import { CRS } from "leaflet";
 import { getRoom1Climbs } from "./apirequests";
 import DisplayClimbInfo from "./displayClimbInfo";
+import { UserContext } from "../App";
 
 const Leaflet1 = () => {
   const [markers, setMarkers] = useState([]);
@@ -17,8 +18,9 @@ const Leaflet1 = () => {
   const [hasAddedMarker, setHasAddedMarker] = useState(false);
   const [allowAddMarker, setAllowAddMarker] = useState(false);
   const [newClimb, setNewClimb] = useState({});
-  const [viewMap1, setViewMap1] = useState(true)
-  const [showAdd, setShowAdd] = useState(true)
+  const [viewMap1, setViewMap1] = useState(true);
+  const [showAdd, setShowAdd] = useState(true);
+  const { user, setUser } = useContext(UserContext);
 
   const MapMarkers = () => {
     useMapEvents({
@@ -37,61 +39,75 @@ const Leaflet1 = () => {
             ...currMarkers,
             { xpos: e.latlng.lat, ypos: e.latlng.lng, color: newClimb.color },
           ];
-        })
-        setTimeout(() => {setViewMap1(false)}, 1000)
-        
+        });
+        setTimeout(() => {
+          setViewMap1(false);
+        }, 1000);
       },
     });
   };
 
   useEffect(() => {
     getRoom1Climbs().then((climbs) => {
-      if (climbs) setMarkers(climbs);
+      const usersClimbs = climbs.filter((climb) => {
+        if (climb.posted_by === user) {
+          return climb;
+        }
+      });
+      if (usersClimbs) setMarkers(usersClimbs);
     });
   }, []);
 
   return (
     <div className="room1_container">
-      {viewMap1 ? (<MapContainer
-        center={[250, 250]}
-        scrollWheelZoom={true}
-        zoom={0}
-        id="map"
-        crs={CRS.Simple}
-      >
-        <ImageOverlay
-          attribution="aidanMurray"
-          url={"Room1.png"}
-          bounds={[
-            [0, 0],
-            [500, 500],
-          ]}
-        />
-        <MapMarkers />
-        {markers.map((climb) => {
-          return (
-            <Circle
-              center={[climb.xpos, climb.ypos]}
-              radius={6}
-              pathOptions={{
-                color: climb.color || "pink",
-                stroke: false,
-                fillOpacity: 1,
-              }}
-            >
-              <Popup>
-                <DisplayClimbInfo climb={climb} />
-              </Popup>
-            </Circle>
-          );
-        })}
-      </MapContainer>) : null}
-      {showAdd ? (<button onClick={() => {
-        setViewForm(true)
-        setViewMap1(false)
-        setShowAdd(false)
-      }}>Add a new climb!</button>) : null}
-      
+      {viewMap1 ? (
+        <MapContainer
+          center={[250, 250]}
+          scrollWheelZoom={true}
+          zoom={0}
+          id="map"
+          crs={CRS.Simple}
+        >
+          <ImageOverlay
+            attribution="aidanMurray"
+            url={"Room1.png"}
+            bounds={[
+              [0, 0],
+              [500, 500],
+            ]}
+          />
+          <MapMarkers />
+          {markers.map((climb) => {
+            return (
+              <Circle
+                center={[climb.xpos, climb.ypos]}
+                radius={6}
+                pathOptions={{
+                  color: climb.color || "pink",
+                  stroke: false,
+                  fillOpacity: 1,
+                }}
+              >
+                <Popup>
+                  <DisplayClimbInfo climb={climb} />
+                </Popup>
+              </Circle>
+            );
+          })}
+        </MapContainer>
+      ) : null}
+      {showAdd ? (
+        <button
+          onClick={() => {
+            setViewForm(true);
+            setViewMap1(false);
+            setShowAdd(false);
+          }}
+        >
+          Add a new climb!
+        </button>
+      ) : null}
+
       {viewForm ? (
         <NewClimbForm
           setMarkers={setMarkers}
