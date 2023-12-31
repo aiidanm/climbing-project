@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { UserContext } from "../App";
+import cruxLogo from '../images/Cruxlogo.png';
 
 const Header = () => {
   const { user, setUser } = useContext(UserContext);
@@ -12,7 +13,7 @@ const Header = () => {
   return (
     <>
       <img
-        src="Cruxlogo.png"
+        src={cruxLogo}
         id="logo"
         alt="the word Crux but the c is a carabiner"
       ></img>

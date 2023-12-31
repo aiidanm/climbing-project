@@ -3,6 +3,11 @@ import GlobalStyle from '../globalStyles.js';
 import { useState, useEffect } from 'react';
 import ImageMapper from 'react-image-mapper';
 import { useForm } from "react-hook-form";
+import { useParams } from 'react-router-dom';
+import islandWall from '../images/island.svg';
+
+const WALL_IMAGES = {island: islandWall,
+}
 
 const AppContainer = styled.div`
   gap: 2em;
@@ -120,7 +125,10 @@ const COLORS = {green: {preFillColor: "rgba(0, 255, 25, 0.15)",
                         fillColor: "rgba(255, 100, 0, 0.2)"},
 }
 
-function Wall({image}) {
+function Wall() {
+  const { wallName } = useParams();
+  const imagePath = WALL_IMAGES[wallName]
+
   const [hoveredArea, setHoveredArea] = useState(null);
 
   const [adminMode, setAdminMode] = useState(false);
@@ -148,6 +156,7 @@ function Wall({image}) {
     name: "userLayout",
     areas: [],
   });
+  const [resetKey, setResetKey] = useState(0);
 
   const getTipPosition = (area) => {
     const [x,y] = area.center
@@ -198,17 +207,16 @@ function Wall({image}) {
   };
 
   const resetHandler = () => {
-    const resetArea = basePolygonArea;
-
     // name: "P1",
     // shape: "poly",
     // coords: [],
     // preFillColor: "rgba(0, 0, 255, 0.15)",
     // fillColor: "rgba(0, 0, 255, 0.2)"
 
-    const adminLayoutCopy = { ...adminLayout, areas: resetArea };
-    setAdminLayout(adminLayoutCopy);
+    setAdminLayout((prevLayout) => ({ ...adminLayout, areas: basePolygonArea }));
     reset();
+    // For some reason I had to press the reset button twice without this, annoying!
+    setResetKey(prevKey => prevKey + 1)
   };
 
   const addPolygonHandler = (data) => {
@@ -255,7 +263,8 @@ function Wall({image}) {
       {adminMode ?
         <AddingClimbs>
           <ImageMapper
-          src={image}
+          key={resetKey}
+          src={imagePath}
           map={adminLayout}
           width={700}
           onImageClick={(evt) => makeDot(evt)}
@@ -308,7 +317,7 @@ function Wall({image}) {
         </AddingClimbs>
         :
         <ImageMapper
-          src={image}
+          src={imagePath}
           map={userLayout}
           width={700}
           onImageClick={() => {}}
