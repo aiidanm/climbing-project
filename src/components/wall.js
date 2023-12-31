@@ -6,7 +6,25 @@ import { useForm } from "react-hook-form";
 import { useParams } from 'react-router-dom';
 import islandWall from '../images/island.svg';
 
-const WALL_IMAGES = {island: islandWall,
+const WALL_IMAGES = {island: {back: islandWall},
+}
+
+const COLORS = {green: {preFillColor: "rgba(0, 255, 25, 0.15)",
+                        fillColor: "rgba(0, 255, 25, 0.2)"},
+                white: {preFillColor: "rgba(255, 255, 255, 0.15)",
+                        fillColor: "rgba(255, 255, 255, 0.2)"},
+                blue: {preFillColor: "rgba(0, 0, 255, 0.15)",
+                        fillColor: "rgba(0, 0, 255, 0.2)"},
+                black: {preFillColor: "rgba(0, 0, 0, 0.15)",
+                        fillColor: "rgba(0, 0, 0, 0.2)"},
+                red: {preFillColor: "rgba(255, 0, 0, 0.15)",
+                        fillColor: "rgba(255, 0, 0, 0.2)"},
+                purple: {preFillColor: "rgba(167, 0, 255, 0.15)",
+                        fillColor: "rgba(167, 0, 255, 0.2)"},
+                yellow: {preFillColor: "rgba(255, 255, 0, 0.15)",
+                        fillColor: "rgba(255, 255, 0, 0.2)"},
+                orange: {preFillColor: "rgba(255, 100, 0, 0.15)",
+                        fillColor: "rgba(255, 100, 0, 0.2)"},
 }
 
 const AppContainer = styled.div`
@@ -107,27 +125,9 @@ const SelectionButtons = styled.div`
   gap: 1em;
 `;
 
-const COLORS = {green: {preFillColor: "rgba(0, 255, 25, 0.15)",
-                        fillColor: "rgba(0, 255, 25, 0.2)"},
-                white: {preFillColor: "rgba(255, 255, 255, 0.15)",
-                        fillColor: "rgba(255, 255, 255, 0.2)"},
-                blue: {preFillColor: "rgba(0, 0, 255, 0.15)",
-                        fillColor: "rgba(0, 0, 255, 0.2)"},
-                black: {preFillColor: "rgba(0, 0, 0, 0.15)",
-                        fillColor: "rgba(0, 0, 0, 0.2)"},
-                red: {preFillColor: "rgba(255, 0, 0, 0.15)",
-                        fillColor: "rgba(255, 0, 0, 0.2)"},
-                purple: {preFillColor: "rgba(167, 0, 255, 0.15)",
-                        fillColor: "rgba(167, 0, 255, 0.2)"},
-                yellow: {preFillColor: "rgba(255, 255, 0, 0.15)",
-                        fillColor: "rgba(255, 255, 0, 0.2)"},
-                orange: {preFillColor: "rgba(255, 100, 0, 0.15)",
-                        fillColor: "rgba(255, 100, 0, 0.2)"},
-}
-
 function Wall() {
-  const { wallName } = useParams();
-  const imagePath = WALL_IMAGES[wallName]
+  const { wallName, view } = useParams();
+  const imagePath = WALL_IMAGES[wallName][view]
 
   const [hoveredArea, setHoveredArea] = useState(null);
 
