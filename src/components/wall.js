@@ -5,8 +5,9 @@ import ImageMapper from 'react-image-mapper';
 import { useForm } from "react-hook-form";
 import { useParams } from 'react-router-dom';
 import islandWall from '../images/island.svg';
+import islandFront from '../images/island_front.svg';
 
-const WALL_IMAGES = {island: {back: islandWall},
+const WALL_IMAGES = {island: {back: islandWall, front: islandFront },
 }
 
 const COLORS = {green: {preFillColor: "rgba(0, 255, 25, 0.15)",
