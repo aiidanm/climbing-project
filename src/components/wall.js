@@ -3,7 +3,6 @@ import GlobalStyle from '../globalStyles.js';
 import { useState, useEffect } from 'react';
 import ImageMapper from 'react-image-mapper';
 import { useForm } from "react-hook-form";
-import island from '../images/island.svg'
 
 const AppContainer = styled.div`
   gap: 2em;
@@ -121,7 +120,7 @@ const COLORS = {green: {preFillColor: "rgba(0, 255, 25, 0.15)",
                         fillColor: "rgba(255, 100, 0, 0.2)"},
 }
 
-function Wall() {
+function Wall({image}) {
   const [hoveredArea, setHoveredArea] = useState(null);
 
   const [adminMode, setAdminMode] = useState(false);
@@ -256,7 +255,7 @@ function Wall() {
       {adminMode ?
         <AddingClimbs>
           <ImageMapper
-          src={island}
+          src={image}
           map={adminLayout}
           width={700}
           onImageClick={(evt) => makeDot(evt)}
@@ -309,7 +308,7 @@ function Wall() {
         </AddingClimbs>
         :
         <ImageMapper
-          src={island}
+          src={image}
           map={userLayout}
           width={700}
           onImageClick={() => {}}
