@@ -1,6 +1,7 @@
 import ColorPicker from "./colorPicker";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { postNewClimb } from "./apirequests";
+import { UserContext } from "../App";
 
 const NewClimbForm = ({
   setMarkers,
@@ -13,10 +14,11 @@ const NewClimbForm = ({
   setNewClimb,
   room,
   setViewMap,
-  setShowAdd
+  setShowAdd,
 }) => {
   const [newClimbColor, setNewClimbColor] = useState();
   const [showFormError, setShowFormError] = useState(false);
+  const { user, setUser } = useContext(UserContext);
 
   const handleChange = (e) => {
     if (e.target.id === "colorpicker") {
@@ -29,9 +31,7 @@ const NewClimbForm = ({
     if (
       !newClimb.climb_name ||
       !newClimb.color ||
-      !newClimb.description ||
-      !newClimb.rating ||
-      !newClimb.poster_name
+      !newClimb.rating
     ) {
       setShowFormError(true);
       setTimeout(() => {
@@ -40,27 +40,25 @@ const NewClimbForm = ({
     } else {
       setShowFormError(false);
       setAllowAddMarker(true);
-      setViewMap(true)
+      setViewMap(true);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-      setViewForm(false);
-      postNewClimb(newClimb);
-      setViewMap(true)
+    setViewForm(false);
+    postNewClimb(newClimb);
+    setViewMap(true);
   };
 
   const handleFormChange = (e) => {
     setNewClimb({
-      color: e.target.parentElement.parentElement[4].value,
+      color: e.target.parentElement.parentElement[2].value,
       climb_name: e.target.parentElement.parentElement[0].value || "black",
-      poster_name: e.target.parentElement.parentElement[2].value,
       rating: e.target.parentElement.parentElement[1].value,
       room: room,
-      description: e.target.parentElement.parentElement[3].value,
       type: " ",
-      posted_by: "Aidan"
+      posted_by: user,
     });
   };
 
@@ -77,8 +75,8 @@ const NewClimbForm = ({
         return newMarkers;
       });
     }
-    setShowAdd(true)
-    setViewMap(true)
+    setShowAdd(true);
+    setViewMap(true);
   };
 
   return (
@@ -112,22 +110,6 @@ const NewClimbForm = ({
           <option value={"2"}>on grade</option>
           <option value={"3"}>hard for grade</option>
         </select>
-      </div>
-      <div className="form_item">
-        <label htmlFor="posterinput" className="form_items">
-          Your name
-        </label>
-        <input
-          type={"text"}
-          id="posterinput"
-          onChange={handleChange}
-          className="form_items"
-          required
-        ></input>
-      </div>
-      <div className="form_item">
-        <label htmlFor="descriptioninput">Enter info</label>
-        <input id="descriptioninput"></input>
       </div>
       <div className="form_item">
         <label htmlFor="colorpicker">Select Climb colour</label>

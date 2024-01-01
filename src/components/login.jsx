@@ -24,7 +24,7 @@ const LoginPage = () => {
   const [message, setMessage] = useState(null);
   const [showMessage, setShowMessage] = useState(false);
   const { user, setUser } = useContext(UserContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setLoginDetails({
@@ -40,12 +40,9 @@ const LoginPage = () => {
 
     signInWithEmailAndPassword(auth, loginDetails.email, loginDetails.password)
       .then((userCredential) => {
-        localStorage.setItem("user", userCredential.user);
-        const Authuser = {
-          email: userCredential.user.email,
-          accessToken: userCredential.user.accessToken,
-        };
-        setUser(userCredential.user.email);
+        localStorage.setItem("user", JSON.stringify(userCredential.user));
+        console.log(userCredential.user)
+        setUser(userCredential.user.displayName);
         setMessage("logged in");
         setTimeout(() => {
           setShowMessage(false);

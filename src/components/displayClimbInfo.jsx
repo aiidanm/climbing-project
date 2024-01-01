@@ -16,7 +16,7 @@ const DisplayClimbInfo = ({ climb }) => {
   return (
     <div className="climbinfo_container">
       <h3>{climb.climb_name}</h3>
-      <h4>Posted by: {climb.poster_name}</h4>
+      <h4>Posted by: {climb.posted_by}</h4>
       <p>Rated: {rating}</p>
       <p>Comments: {climb.description}</p>
     </div>
