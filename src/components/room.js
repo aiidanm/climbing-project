@@ -5,6 +5,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 95%; 
+  margin: 0 auto; 
+
 `;
 
 const Path = styled.path`
@@ -22,6 +25,12 @@ const Path = styled.path`
 const AccentPath = styled.path`
   fill: rgba(130, 130, 130, 1);
 `;
+
+ const Svg = styled.svg`
+  width: 100%; 
+  height: auto; 
+`;
+
 const Room2 = () => {
   const navigate = useNavigate();
 
@@ -32,7 +41,7 @@ const Room2 = () => {
 
   return (
   <Container>
-  <svg width="297mm" height="210mm" version="1.1" viewBox="0 0 297 210" xmlns="http://www.w3.org/2000/svg">
+  <Svg viewBox="0 0 297 210" preserveAspectRatio="xMidYMid meet">
     <Path d="m-0.26381 149.88h18.501l-3.7824-50.561 17.51-16.244-14.421-16.016-0.47914-32.84 20.715-11.336 9.1306-8.2707 111.31 10.583 11.974-11.535h105.24l9.2679 24.104v22.702h12.564v-60.597h-297.53z"
           onClick={() => handleWallClick('backwall')}
     />
@@ -51,7 +60,7 @@ const Room2 = () => {
     <AccentPath d="m161.62 87.845 29.907-5.4266 33.187 1.3072-33.557-2.9211-29.537 7.0404" />
     <AccentPath d="m101.87 116.78 51.816 16.547 19.95-20.01-19.341 21.854-52.426-18.39" />
     <AccentPath d="m213.36 133.96 22.268-23.192-10.913-27.044 12.825 27.152z" />
-  </svg>
+  </Svg>
     </Container>
   );
 };
