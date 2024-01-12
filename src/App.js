@@ -13,7 +13,6 @@ import LoginPage from "./components/login";
 import { Link } from "react-router-dom";
 
 export const UserContext = createContext({ user: null, setUser: () => {} });
-const ADMIN = true;
 
 function App() {
   const [user, setUser] = useState(null); // Corrected to use useState
@@ -25,14 +24,13 @@ function App() {
             <Header />
           </Link>
 
-          {user || ADMIN ? (
+          {user ? (
             <Routes>
               <Route path="/" element={<NavButtons />}></Route>
               <Route path="room1" element={<Leaflet1 />}></Route>
-              <Route path="room2" element={<Leaflet2 />}></Route>
+              <Route path="room2" element={<Room />}></Route>
               <Route path="room3" element={<Leaflet3 />}></Route>
               <Route path="wall/:wallName/:view" element={<Wall />}></Route>
-              <Route path="room" element={<Room />}></Route>
               <Route path="signup" element={<SignupPage />}></Route>
             </Routes>
           ) : (

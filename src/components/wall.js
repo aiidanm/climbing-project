@@ -1,41 +1,60 @@
-import styled from 'styled-components';
-import GlobalStyle from '../globalStyles.js';
-import { useState, useEffect } from 'react';
+import styled from "styled-components";
+import GlobalStyle from "../globalStyles.js";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useParams } from 'react-router-dom';
-import islandWall from '../images/island.svg';
-import islandFront from '../images/island_front.svg';
+import { useParams } from "react-router-dom";
+import islandWall from "../images/island.svg";
+import islandFront from "../images/island_front.svg";
+import { postNewClimb } from "./apirequests.js";
 
-const WALL_IMAGES = {island: {back: islandWall, front: islandFront },
-}
+const WALL_IMAGES = { island: { back: islandWall, front: islandFront } };
 
-const COLORS = {green: {preFillColor: "rgba(0, 255, 25, 0.5)",
-                        fillColor: "rgba(0, 255, 25, 0.7)"},
-                white: {preFillColor: "rgba(255, 255, 255, 0.5)",
-                        fillColor: "rgba(255, 255, 255, 0.7)"},
-                blue: {preFillColor: "rgba(0, 0, 255, 0.5)",
-                        fillColor: "rgba(0, 0, 255, 0.7)"},
-                black: {preFillColor: "rgba(0, 0, 0, 0.5)",
-                        fillColor: "rgba(0, 0, 0, 0.7)"},
-                red: {preFillColor: "rgba(255, 0, 0, 0.5)",
-                        fillColor: "rgba(255, 0, 0, 0.7)"},
-                purple: {preFillColor: "rgba(167, 0, 255, 0.5)",
-                        fillColor: "rgba(167, 0, 255, 0.7)"},
-                yellow: {preFillColor: "rgba(255, 255, 0, 0.5)",
-                        fillColor: "rgba(255, 255, 0, 0.7)"},
-                orange: {preFillColor: "rgba(255, 100, 0, 0.5)",
-                        fillColor: "rgba(255, 100, 0, 0.7)"},
-}
+const COLORS = {
+  green: {
+    preFillColor: "rgba(0, 255, 25, 0.5)",
+    fillColor: "rgba(0, 255, 25, 0.7)",
+  },
+  white: {
+    preFillColor: "rgba(255, 255, 255, 0.5)",
+    fillColor: "rgba(255, 255, 255, 0.7)",
+  },
+  blue: {
+    preFillColor: "rgba(0, 0, 255, 0.5)",
+    fillColor: "rgba(0, 0, 255, 0.7)",
+  },
+  black: {
+    preFillColor: "rgba(0, 0, 0, 0.5)",
+    fillColor: "rgba(0, 0, 0, 0.7)",
+  },
+  red: {
+    preFillColor: "rgba(255, 0, 0, 0.5)",
+    fillColor: "rgba(255, 0, 0, 0.7)",
+  },
+  purple: {
+    preFillColor: "rgba(167, 0, 255, 0.5)",
+    fillColor: "rgba(167, 0, 255, 0.7)",
+  },
+  yellow: {
+    preFillColor: "rgba(255, 255, 0, 0.5)",
+    fillColor: "rgba(255, 255, 0, 0.7)",
+  },
+  orange: {
+    preFillColor: "rgba(255, 100, 0, 0.5)",
+    fillColor: "rgba(255, 100, 0, 0.7)",
+  },
+};
 
 const Svg = styled.svg`
   width: 100%;
-  height: auto; 
+  height: auto;
   opacity: 0;
   animation: fadeIn 0.3s ease forwards;
   position: relative;
 
   @keyframes fadeIn {
-    to { opacity: 1; }
+    to {
+      opacity: 1;
+    }
   }
 `;
 
@@ -50,10 +69,10 @@ const AppContainer = styled.div`
 const WallContainer = styled.div`
   position: relative;
   gap: 1rem;
-  width: 100%; 
-  max-width: 700px; 
-  margin: auto; 
-  height: auto; 
+  width: 100%;
+  max-width: 700px;
+  margin: auto;
+  height: auto;
 `;
 
 const Tooltip = styled.span`
@@ -115,16 +134,16 @@ const Button = styled.button`
   }
 
   &:disabled {
-      background-color: #cccccc;
-      color: #666666;
-      cursor: default;
-      opacity: 0.6;
-    }
+    background-color: #cccccc;
+    color: #666666;
+    cursor: default;
+    opacity: 0.6;
+  }
 `;
 
 const Circle = styled.circle`
   &:hover {
-    fill: ${props => props.hoverFill};
+    fill: ${(props) => props.hoverFill};
 `;
 
 const ErrorMessage = styled.span`
@@ -148,17 +167,22 @@ const SelectionButtons = styled.div`
 
 function Wall() {
   const { wallName, view } = useParams();
-  const imagePath = WALL_IMAGES[wallName][view]
+  const imagePath = WALL_IMAGES[wallName][view];
 
   const [hoveredDot, setHoveredDot] = useState(null);
 
   const [adminMode, setAdminMode] = useState(false);
   const [makingSelection, setMakingSelection] = useState(false);
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
   const [dotPosition, setDotPosition] = useState(null);
   const [dotColor, setDotColor] = useState("rgba(0,0,255,0.7)");
-  const [dots, setDots] = useState([]); 
+  const [dots, setDots] = useState([]);
 
   const [viewBox, setViewBox] = useState(null);
 
@@ -172,7 +196,7 @@ function Wall() {
 
   const handleSVGClick = (event) => {
     if (!makingSelection) {
-      return
+      return;
     }
 
     const svg = event.currentTarget;
@@ -180,15 +204,17 @@ function Wall() {
     point.x = event.clientX;
     point.y = event.clientY;
 
-    const transformedPoint = point.matrixTransform(svg.getScreenCTM().inverse());
+    const transformedPoint = point.matrixTransform(
+      svg.getScreenCTM().inverse()
+    );
 
     setDotPosition({ x: transformedPoint.x, y: transformedPoint.y });
   };
 
   const getTipPosition = (dot) => {
-    const {x, y} = dot.position
-    const offset = 30
-    return { top: `${y-offset}px`, left: `${x}px` };
+    const { x, y } = dot.position;
+    const offset = 30;
+    return { top: `${y - offset}px`, left: `${x}px` };
   };
 
   const resetHandler = () => {
@@ -202,11 +228,11 @@ function Wall() {
       rating: data.rating,
       fillColor: COLORS[data.color].preFillColor,
       hoverColor: COLORS[data.color].fillColor,
-      position: dotPosition
-    }
+      position: dotPosition,
+    };
 
     setDots([...dots, dot]); // Add the new dot to the existing dots
-
+    postNewClimb(dot); // save to database here
     setAdminMode(false);
     resetHandler();
   };
@@ -214,72 +240,87 @@ function Wall() {
   const handleAddClimb = () => {
     setMakingSelection(true);
     setAdminMode(true);
-  }
+  };
 
   const handleChangeColor = (event) => {
     const color = event.target.value;
     setDotColor(COLORS[color].fillColor);
-  }
+  };
 
   const handleHoverDot = (event, dot) => {
-    const svg = event.currentTarget.parentNode; 
+    const svg = event.currentTarget.parentNode;
     const point = svg.createSVGPoint();
     point.x = dot.position.x;
     point.y = dot.position.y;
-    
+
     const screenCTM = svg.getScreenCTM();
     const screenPoint = point.matrixTransform(screenCTM);
-    setHoveredDot({...dot, position: {x: screenPoint.x, y: screenPoint.y}})
-  }
+    setHoveredDot({ ...dot, position: { x: screenPoint.x, y: screenPoint.y } });
+  };
 
   return (
     <AppContainer>
-    <GlobalStyle/>
-    <WallContainer>
-      {adminMode ?
-        <AddingClimbs>
-          <svg width="100%" height="100%" viewBox={viewBox} preserveAspectRatio="xMidYMid meet"
-               onClick={handleSVGClick}
-               onTouchStart={handleSVGClick}
-          >
-            <image href={imagePath} width="100%" height="100%"/>
-            {dotPosition && (
-              <Circle
-                cx={dotPosition.x}
-                cy={dotPosition.y}
-                r="15"
-                fill={dotColor}
-                stroke="rgba(0,0,0,0.8)"
-                strokeWidth="1"
-              />
-            )}
-          </svg>
-          {makingSelection ? 
-          <SelectionButtons>
-            <Button 
-              onClick={() => setMakingSelection(false)}
-              disabled={dotPosition === null}
+      <GlobalStyle />
+      <WallContainer>
+        {adminMode ? (
+          <AddingClimbs>
+            <svg
+              width="100%"
+              height="100%"
+              viewBox={viewBox}
+              preserveAspectRatio="xMidYMid meet"
+              onClick={handleSVGClick}
+              onTouchStart={handleSVGClick}
             >
-              Confirm selection
-            </Button>
-            <Button onClick={() => resetHandler()}>Reset Selection</Button>
-          </SelectionButtons>
-          :
-          <StyledForm onSubmit={handleSubmit(addPointHandler)}>
-              <Label htmlFor="name">Climb Name</Label>
-              <Input {...register("name", { required: "Climb Name is required" })} />
-              {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
+              <image href={imagePath} width="100%" height="100%" />
+              {dotPosition && (
+                <Circle
+                  cx={dotPosition.x}
+                  cy={dotPosition.y}
+                  r="15"
+                  fill={dotColor}
+                  stroke="rgba(0,0,0,0.8)"
+                  strokeWidth="1"
+                />
+              )}
+            </svg>
+            {makingSelection ? (
+              <SelectionButtons>
+                <Button
+                  onClick={() => setMakingSelection(false)}
+                  disabled={dotPosition === null}
+                >
+                  Confirm selection
+                </Button>
+                <Button onClick={() => resetHandler()}>Reset Selection</Button>
+              </SelectionButtons>
+            ) : (
+              <StyledForm onSubmit={handleSubmit(addPointHandler)}>
+                <Label htmlFor="name">Climb Name</Label>
+                <Input
+                  {...register("name", { required: "Climb Name is required" })}
+                />
+                {errors.name && (
+                  <ErrorMessage>{errors.name.message}</ErrorMessage>
+                )}
 
-              <Label htmlFor="rating">Rating</Label>
-              <Select {...register("rating", { required: "Rating is required" })}>
+                <Label htmlFor="rating">Rating</Label>
+                <Select
+                  {...register("rating", { required: "Rating is required" })}
+                >
                   <option value="easy">Easy</option>
                   <option value="right">Bang on</option>
                   <option value="hard">Hard</option>
-              </Select>
-              {errors.rating && <ErrorMessage>{errors.rating.message}</ErrorMessage>}
+                </Select>
+                {errors.rating && (
+                  <ErrorMessage>{errors.rating.message}</ErrorMessage>
+                )}
 
-              <Label htmlFor="color">Colour</Label>
-              <Select {...register("color", { required: "Colors is required" })} onChange={handleChangeColor}>
+                <Label htmlFor="color">Colour</Label>
+                <Select
+                  {...register("color", { required: "Colors is required" })}
+                  onChange={handleChangeColor}
+                >
                   <option value="green">Green</option>
                   <option value="white">White</option>
                   <option value="blue">Blue</option>
@@ -288,49 +329,54 @@ function Wall() {
                   <option value="purple">Purple</option>
                   <option value="yellow">Yellow</option>
                   <option value="orange">Orange</option>
-              </Select>
-              {errors.color && <ErrorMessage>{errors.color.message}</ErrorMessage>}
-              <Button type="submit">Add climb</Button>
-          </StyledForm>
-          }
-        </AddingClimbs>
-        :
-        <>
-        {viewBox && 
-        <Svg width="100%" height="100%" viewBox={viewBox} preserveAspectRatio="xMidYMid meet">
-          <image href={imagePath} width="100%" height="100%" />
-          {dots.map((dot, index) => (
-            <Circle
-              key={index}
-              cx={dot.position.x}
-              cy={dot.position.y}
-              r="15"
-              fill={dot.fillColor}
-              hoverFill={dot.hoverColor}
-              onMouseEnter={event => handleHoverDot(event, dot)}
-              onMouseLeave={event => setHoveredDot(null)}
-              stroke="rgba(0,0,0,0.8)"
-              strokeWidth="1"
-            />
-          ))}
-        </Svg>
-        }
-        </>
-      } 
+                </Select>
+                {errors.color && (
+                  <ErrorMessage>{errors.color.message}</ErrorMessage>
+                )}
+                <Button type="submit">Add climb</Button>
+              </StyledForm>
+            )}
+          </AddingClimbs>
+        ) : (
+          <>
+            {viewBox && (
+              <Svg
+                width="100%"
+                height="100%"
+                viewBox={viewBox}
+                preserveAspectRatio="xMidYMid meet"
+              >
+                <image href={imagePath} width="100%" height="100%" />
+                {dots.map((dot, index) => (
+                  <Circle
+                    key={index}
+                    cx={dot.position.x}
+                    cy={dot.position.y}
+                    r="15"
+                    fill={dot.fillColor}
+                    hoverFill={dot.hoverColor}
+                    onMouseEnter={(event) => handleHoverDot(event, dot)}
+                    onMouseLeave={(event) => setHoveredDot(null)}
+                    stroke="rgba(0,0,0,0.8)"
+                    strokeWidth="1"
+                  />
+                ))}
+              </Svg>
+            )}
+          </>
+        )}
 
-      {hoveredDot && (
-        <Tooltip
-        style={{ ...getTipPosition(hoveredDot) }}
-        >
-        {hoveredDot && hoveredDot.name}
-        </Tooltip>
+        {hoveredDot && (
+          <Tooltip style={{ ...getTipPosition(hoveredDot) }}>
+            {hoveredDot && hoveredDot.name}
+          </Tooltip>
+        )}
+      </WallContainer>
+      {!adminMode && (
+        <Button type="submit" onClick={handleAddClimb}>
+          Add Climb
+        </Button>
       )}
-    </WallContainer>
-    {!adminMode &&
-    <Button type="submit" onClick={handleAddClimb}>
-      Add Climb
-    </Button>
-    }
     </AppContainer>
   );
 }
